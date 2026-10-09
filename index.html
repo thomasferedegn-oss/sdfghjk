@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethiopian Kids English Articles Adventure (A, AN, THE)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & Noto Sans Ethiopic for smooth Amharic support -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Noto+Sans+Ethiopic:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans Ethiopic', 'sans-serif'],
+                    },
+                    colors: {
+                        ethiogreen: '#009B48',
+                        ethioyellow: '#FFFE00',
+                        ethored: '#EF212D',
+                        ethioblue: '#002395',
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'bounce-subtle': 'bounceSubtle 1.5s infinite',
+                        'shake': 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both',
+                    },
+                    keyframes: {
+                        bounceSubtle: {
+                            '0%, 100%': { transform: 'translateY(-3%)' },
+                            '50%': { transform: 'translateY(0)' },
+                        },
+                        shake: {
+                            '10%, 90%': { transform: 'translate3d(-2px, 0, 0)' },
+                            '20%, 80%': { transform: 'translate3d(4px, 0, 0)' },
+                            '30%, 50%, 70%': { transform: 'translate3d(-6px, 0, 0)' },
+                            '40%, 60%': { transform: 'translate3d(6px, 0, 0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #022c22 0%, #064e3b 35%, #0f172a 100%);
+            min-height: 100vh;
+            color: #f8fafc;
+            font-family: 'Inter', 'Noto Sans Ethiopic', sans-serif;
+        }
+        .correct-glow {
+            box-shadow: 0 0 25px rgba(34, 197, 94, 0.8);
+            border-color: #22c55e !important;
+        }
+        .wrong-glow {
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.8);
+            border-color: #ef4444 !important;
+        }
+        .ethiopic-font {
+            font-family: 'Noto Sans Ethiopic', sans-serif;
+        }
+        /* Custom scrollbars */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(15, 23, 42, 0.6);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #059669;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="p-2 sm:p-4 md:p-6 flex flex-col justify-between min-h-screen">
+
+    <header class="max-w-5xl mx-auto w-full bg-slate-900/80 backdrop-blur-md rounded-3xl p-4 md:p-6 border border-emerald-500/30 shadow-2xl mb-4">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <!-- Logo & Title -->
+            <div class="flex items-center gap-3 text-center md:text-left">
+                <div class="w-14 h-14 bg-emerald-600 rounded-2xl flex items-center justify-center text-3xl shadow-lg shadow-emerald-900/50 border-2 border-yellow-400">
+                    🦁
+                </div>
+                <div>
+                    <h1 class="text-xl sm:text-2xl font-black tracking-tight text-white flex items-center gap-2 justify-center md:justify-start">
+                        <span>English Articles Explorer</span>
+                        <span class="text-xs bg-yellow-400 text-slate-900 px-2 py-0.5 rounded-full font-bold uppercase">A / AN / THE</span>
+                    </h1>
+                    <p class="text-xs sm:text-sm text-emerald-300 font-medium ethiopic-font">
+                        የእንግሊዝኛ አርቲክሎች ትምህርታዊ ጨዋታ ለኢትዮጵያ ህፃናት
+                    </p>
+                </div>
+            </div>
+
+            <!-- Stats & Voice & Language Switch -->
+            <div class="flex flex-wrap items-center justify-center gap-3">
+                
+                <!-- Score Badge -->
+                <div class="bg-slate-800 border border-amber-500/40 rounded-2xl px-4 py-2 flex items-center gap-2 shadow-inner">
+                    <i class="fa-solid fa-star text-yellow-400 text-xl animate-pulse"></i>
+                    <div>
+                        <div class="text-[10px] text-slate-400 font-bold uppercase tracking-wider">Stars</div>
+                        <div id="scoreDisplay" class="text-xl font-extrabold text-amber-300">0</div>
+                    </div>
+                </div>
+
+                <!-- British Voice Indicator -->
+                <button onclick="testGoldenVoice()" title="Click to test Golden Voice Narrator" class="bg-slate-800 hover:bg-slate-700 border border-sky-500/40 rounded-2xl px-3 py-2 flex items-center gap-2 text-left transition group">
+                    <div class="w-8 h-8 rounded-full bg-sky-600 flex items-center justify-center text-white text-sm group-hover:scale-110 transition">
+                        🎙️
+                    </div>
+                    <div>
+                        <div class="text-[10px] text-sky-300 font-bold uppercase flex items-center gap-1">
+                            <span>British Narrator</span>
+                            <i class="fa-solid fa-volume-high text-xs text-emerald-400"></i>
+                        </div>
+                        <div id="voiceStatusText" class="text-xs font-semibold text-slate-200">Golden Voice Ready</div>
+                    </div>
+                </button>
+
+                <!-- Amharic Toggle -->
+                <button onclick="toggleAmharic()" id="amharicToggleBtn" class="bg-emerald-700 hover:bg-emerald-600 border border-emerald-400/50 rounded-2xl px-4 py-2 flex items-center gap-2 text-white font-bold text-sm shadow transition">
+                    <i class="fa-solid fa-language text-yellow-300 text-lg"></i>
+                    <span id="amharicToggleLabel" class="ethiopic-font">አማርኛ: በርቷል</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="flex flex-wrap justify-center gap-2 mt-5 pt-4 border-t border-slate-800">
+            <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 bg-emerald-600 text-white shadow-lg transition">
+                <i class="fa-solid fa-gamepad"></i>
+                <span>1. Sentence Quiz</span>
+            </button>
+            <button onclick="switchTab('sorting')" id="tab-sorting" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition">
+                <i class="fa-solid fa-boxes-packing"></i>
+                <span>2. Basket Sorting</span>
+            </button>
+            <button onclick="switchTab('unique')" id="tab-unique" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition">
+                <i class="fa-solid fa-sun text-yellow-400"></i>
+                <span>3. Unique Objects Spotlight</span>
+            </button>
+            <button onclick="switchTab('rules')" id="tab-rules" class="tab-btn px-4 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition">
+                <i class="fa-solid fa-book-open text-sky-400"></i>
+                <span>4. Rule Book (ህጎች)</span>
+            </button>
+        </nav>
+    </header>
+
+    <main class="max-w-5xl mx-auto w-full flex-grow flex flex-col justify-center my-2">
+
+        <!-- ==================================================================== -->
+        <!-- MODE 1: SENTENCE QUIZ ADVENTURE                                       -->
+        <!-- ==================================================================== -->
+        <section id="sec-quiz" class="game-section block">
+            <div id="quizCard" class="bg-slate-900/90 rounded-3xl p-6 sm:p-8 border-2 border-slate-700 shadow-2xl text-center relative overflow-hidden transition-all duration-300">
+                
+                <!-- Progress Header -->
+                <div class="flex items-center justify-between mb-6 text-xs sm:text-sm font-bold text-slate-400 border-b border-slate-800 pb-3">
+                    <span id="quizQuestionCounter" class="bg-slate-800 px-3 py-1.5 rounded-full border border-slate-700">Question 1 of 10</span>
+                    <span class="text-amber-400 flex items-center gap-1">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                        <span>Learn A, AN, or THE</span>
+                    </span>
+                </div>
+
+                <!-- Big Visual Illustration -->
+                <div class="my-4 flex flex-col items-center justify-center">
+                    <div id="quizGraphic" class="w-28 h-28 sm:w-36 sm:h-36 bg-slate-800 border-4 border-emerald-500/40 rounded-3xl flex items-center justify-center text-6xl sm:text-7xl shadow-xl transform hover:scale-105 transition duration-300 mb-3">
+                        ☀️
+                    </div>
+                    <div id="quizAmharicWord" class="text-amber-300 font-bold text-lg sm:text-xl ethiopic-font bg-slate-800/80 px-4 py-1 rounded-full border border-amber-500/30">
+                        ፀሐይ (The Sun)
+                    </div>
+                </div>
+
+                <!-- Sentence Display -->
+                <div class="my-6">
+                    <p id="quizSentence" class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-wide leading-relaxed">
+                        Look at <span class="underline decoration-yellow-400 decoration-4 underline-offset-8 px-2 text-yellow-300">____</span> sun shining bright!
+                    </p>
+                </div>
+
+                <!-- Choice Buttons -->
+                <div id="quizOptionsContainer" class="grid grid-cols-3 gap-3 sm:gap-6 my-6 max-w-2xl mx-auto">
+                    <button onclick="checkQuizAnswer('A')" id="btn-choice-A" class="choice-btn py-4 px-3 sm:px-6 rounded-2xl text-2xl sm:text-3xl font-black bg-slate-800 hover:bg-emerald-600 text-white border-2 border-slate-700 hover:border-emerald-400 shadow-xl transition flex flex-col items-center justify-center gap-1 group">
+                        <span>A</span>
+                        <span class="text-xs font-semibold text-slate-400 group-hover:text-emerald-100 ethiopic-font">አንድ (Consonant)</span>
+                    </button>
+                    <button onclick="checkQuizAnswer('AN')" id="btn-choice-AN" class="choice-btn py-4 px-3 sm:px-6 rounded-2xl text-2xl sm:text-3xl font-black bg-slate-800 hover:bg-emerald-600 text-white border-2 border-slate-700 hover:border-emerald-400 shadow-xl transition flex flex-col items-center justify-center gap-1 group">
+                        <span>AN</span>
+                        <span class="text-xs font-semibold text-slate-400 group-hover:text-emerald-100 ethiopic-font">አንድ (Vowel sound)</span>
+                    </button>
+                    <button onclick="checkQuizAnswer('THE')" id="btn-choice-THE" class="choice-btn py-4 px-3 sm:px-6 rounded-2xl text-2xl sm:text-3xl font-black bg-slate-800 hover:bg-emerald-600 text-white border-2 border-slate-700 hover:border-emerald-400 shadow-xl transition flex flex-col items-center justify-center gap-1 group">
+                        <span>THE</span>
+                        <span class="text-xs font-semibold text-slate-400 group-hover:text-emerald-100 ethiopic-font">የታወቀው / ልዩ</span>
+                    </button>
+                </div>
+
+                <div id="feedbackBox" class="hidden rounded-2xl p-5 text-left border-2 transition-all space-y-4 my-4">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                        <div class="flex items-center gap-3">
+                            <span id="feedbackIcon" class="text-3xl sm:text-4xl">✅</span>
+                            <div>
+                                <h3 id="feedbackTitle" class="text-xl font-extrabold">Correct! Excellent job!</h3>
+                                <p id="feedbackEnglishRule" class="text-sm font-semibold text-slate-200 mt-0.5">We use "THE" because the sun is a unique object. There is only one sun!</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Review Timer Indicator Badge -->
+                        <div id="reviewTimerBadge" class="bg-slate-900/90 text-yellow-300 text-xs font-bold px-4 py-2 rounded-2xl flex items-center gap-2 border border-amber-500/40 whitespace-nowrap shadow-lg self-end sm:self-center">
+                            <i id="timerIcon" class="fa-solid fa-volume-high text-amber-400 animate-pulse text-base"></i>
+                            <span id="timerStatus">Narrator Explaining...</span>
+                        </div>
+                    </div>
+
+                    <!-- Amharic Explanation -->
+                    <div id="feedbackAmharicRule" class="bg-slate-950/60 rounded-xl p-3 border border-slate-700/60 text-emerald-300 text-sm font-bold ethiopic-font">
+                        ምክንያት፡ ፀሐይ በአለም ላይ አንድ ብቻ ስለሆነች "THE" እንጠቀማለን!
+                    </div>
+
+                    <!-- Manual Controls for Extended Reading Time -->
+                    <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-700/50">
+                        <div class="flex items-center gap-2">
+                            <button onclick="replayFeedbackVoice()" class="bg-slate-800 hover:bg-slate-700 text-amber-300 border border-amber-500/40 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition">
+                                <i class="fa-solid fa-rotate-right"></i>
+                                <span>Replay Narrator</span>
+                            </button>
+                            <button onclick="togglePauseTimer()" id="pauseTimerBtn" class="bg-slate-800 hover:bg-slate-700 text-sky-300 border border-sky-500/40 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition">
+                                <i class="fa-solid fa-pause"></i>
+                                <span id="pauseBtnText">Pause Timer</span>
+                            </button>
+                        </div>
+
+                        <button onclick="nextQuizQuestion()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2 rounded-xl font-black text-xs uppercase tracking-wider shadow-lg flex items-center gap-2 transition ml-auto">
+                            <span>Next Question</span>
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ==================================================================== -->
+        <!-- MODE 2: BASKET SORTING GAME                                          -->
+        <!-- ==================================================================== -->
+        <section id="sec-sorting" class="game-section hidden">
+            <div class="bg-slate-900/90 rounded-3xl p-6 sm:p-8 border-2 border-slate-700 shadow-2xl text-center">
+                <h2 class="text-2xl font-black text-white flex items-center justify-center gap-2">
+                    <span>🧺 Put the Item into the Right Article Basket!</span>
+                </h2>
+                <p class="text-sm text-slate-300 ethiopic-font mt-1">
+                    ቃሉን ወደ ትክክለኛው አርቲክል ቅርጫት ያስገቡ
+                </p>
+
+                <!-- Draggable / Highlighted Target Item -->
+                <div id="sortingCard" class="my-6 bg-slate-800 border-2 border-amber-500/50 rounded-3xl p-6 max-w-sm mx-auto shadow-2xl transform hover:scale-105 transition">
+                    <div id="sortItemEmoji" class="text-7xl mb-2">🐘</div>
+                    <div id="sortItemWord" class="text-3xl font-extrabold text-white tracking-wider">Elephant</div>
+                    <div id="sortItemAmharic" class="text-amber-300 font-bold ethiopic-font text-lg mt-1">ዝሆን</div>
+                </div>
+
+                <!-- Sorting Feedback Message Box -->
+                <div id="sortFeedback" class="hidden max-w-md mx-auto my-3 p-4 rounded-2xl text-center font-bold text-base transition">
+                    <!-- Dynamic Feedback -->
+                </div>
+
+                <!-- Basket Buttons -->
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto mt-6">
+                    <!-- Basket A -->
+                    <button onclick="submitSortChoice('A')" class="bg-emerald-900/60 hover:bg-emerald-800 border-4 border-emerald-500 rounded-3xl p-5 flex flex-col items-center justify-center shadow-2xl group transition transform hover:-translate-y-1">
+                        <div class="text-4xl mb-1">🧺</div>
+                        <div class="text-3xl font-black text-emerald-300">A</div>
+                        <div class="text-xs font-bold text-emerald-200 mt-1">Consonant Sound</div>
+                        <div class="text-xs text-slate-300 ethiopic-font">ተናባቢ ድምፅ (a book, a cat)</div>
+                    </button>
+
+                    <!-- Basket AN -->
+                    <button onclick="submitSortChoice('AN')" class="bg-amber-900/60 hover:bg-amber-800 border-4 border-amber-500 rounded-3xl p-5 flex flex-col items-center justify-center shadow-2xl group transition transform hover:-translate-y-1">
+                        <div class="text-4xl mb-1">🧺</div>
+                        <div class="text-3xl font-black text-amber-300">AN</div>
+                        <div class="text-xs font-bold text-amber-200 mt-1">Vowel Sound (a,e,i,o,u)</div>
+                        <div class="text-xs text-slate-300 ethiopic-font">አናባቢ ድምፅ (an apple, an egg)</div>
+                    </button>
+
+                    <!-- Basket THE -->
+                    <button onclick="submitSortChoice('THE')" class="bg-sky-900/60 hover:bg-sky-800 border-4 border-sky-500 rounded-3xl p-5 flex flex-col items-center justify-center shadow-2xl group transition transform hover:-translate-y-1">
+                        <div class="text-4xl mb-1">🧺</div>
+                        <div class="text-3xl font-black text-sky-300">THE</div>
+                        <div class="text-xs font-bold text-sky-200 mt-1">Unique / Specific</div>
+                        <div class="text-xs text-slate-300 ethiopic-font">ልዩ ወይም የታወቀ ነገር (the sun)</div>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================================================================== -->
+        <!-- MODE 3: UNIQUE OBJECTS SPOTLIGHT                                     -->
+        <!-- ==================================================================== -->
+        <section id="sec-unique" class="game-section hidden">
+            <div class="bg-slate-900/90 rounded-3xl p-6 sm:p-8 border-2 border-slate-700 shadow-2xl">
+                <div class="text-center max-w-2xl mx-auto mb-8">
+                    <span class="bg-amber-500/20 text-amber-300 text-xs font-bold px-3 py-1 rounded-full uppercase border border-amber-500/40">Always Use "THE"</span>
+                    <h2 class="text-3xl font-black text-white mt-2">🌟 Unique Objects Spotlight</h2>
+                    <p class="text-slate-300 text-sm mt-1">
+                        In English, we ALWAYS use <strong class="text-yellow-300 font-extrabold">"THE"</strong> for objects that are unique (there is only one in existence) or famous geographical locations!
+                    </p>
+                    <p class="text-emerald-300 font-semibold ethiopic-font text-xs mt-1">
+                        በዓለም ላይ አንድ ብቻ ለሆኑ ነገሮች ሁልጊዜ "THE" እንጠቀማለን!
+                    </p>
+                </div>
+
+                <!-- Unique Objects Grid -->
+                <div id="uniqueObjectsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Cards populated via JavaScript -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================================================================== -->
+        <!-- MODE 4: INTERACTIVE RULE BOOK                                        -->
+        <!-- ==================================================================== -->
+        <section id="sec-rules" class="game-section hidden">
+            <div class="bg-slate-900/90 rounded-3xl p-6 sm:p-8 border-2 border-slate-700 shadow-2xl space-y-6">
+                <div class="text-center border-b border-slate-800 pb-4">
+                    <h2 class="text-3xl font-black text-white">📖 How to Use A, AN, and THE</h2>
+                    <p class="text-slate-300 text-sm ethiopic-font mt-1">የአርቲክሎች ህጎች እና አጠቃቀም መመሪያ</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Rule A -->
+                    <div class="bg-slate-800/80 border-2 border-emerald-500/40 rounded-2xl p-5 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-black text-emerald-400">Rule 1: "A"</span>
+                            <button onclick="speakGoldenVoice('Rule 1: Use A before words starting with a consonant sound, like a lion, a car, or a banana.')" class="bg-emerald-600 hover:bg-emerald-500 p-2 rounded-xl text-white text-xs">
+                                <i class="fa-solid fa-volume-high"></i> Listen
+                            </button>
+                        </div>
+                        <p class="text-sm text-slate-200">
+                            Use <strong class="text-emerald-400">"A"</strong> before singular nouns that begin with a <strong>consonant sound</strong> (b, c, d, f, g, l, m, p, t...).
+                        </p>
+                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 text-xs ethiopic-font text-emerald-300">
+                            <strong>በአማርኛ፡</strong> ከተናባቢ ድምፅ በፊት "A" እንጠቀማለን።
+                            <br>ምሳሌ፡ A lion (አንበሳ)፣ A banana (ሙዝ)።
+                        </div>
+                    </div>
+
+                    <!-- Rule AN -->
+                    <div class="bg-slate-800/80 border-2 border-amber-500/40 rounded-2xl p-5 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-black text-amber-400">Rule 2: "AN"</span>
+                            <button onclick="speakGoldenVoice('Rule 2: Use AN before words starting with a vowel sound: A, E, I, O, U. Like an apple, or an elephant.')" class="bg-amber-600 hover:bg-amber-500 p-2 rounded-xl text-white text-xs">
+                                <i class="fa-solid fa-volume-high"></i> Listen
+                            </button>
+                        </div>
+                        <p class="text-sm text-slate-200">
+                            Use <strong class="text-amber-400">"AN"</strong> before singular nouns starting with a <strong>vowel sound</strong> (A, E, I, O, U).
+                        </p>
+                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 text-xs ethiopic-font text-amber-300">
+                            <strong>በአማርኛ፡</strong> ከአናባቢ ድምፆች (a, e, i, o, u) በፊት "AN" እንጠቀማለን።
+                            <br>ምሳሌ፡ An apple (ፖም)፣ An elephant (ዝሆን)።
+                        </div>
+                    </div>
+
+                    <!-- Rule THE -->
+                    <div class="bg-slate-800/80 border-2 border-sky-500/40 rounded-2xl p-5 space-y-3">
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-black text-sky-400">Rule 3: "THE"</span>
+                            <button onclick="speakGoldenVoice('Rule 3: Use THE for unique objects that only exist once, like the sun, the moon, or the Nile River.')" class="bg-sky-600 hover:bg-sky-500 p-2 rounded-xl text-white text-xs">
+                                <i class="fa-solid fa-volume-high"></i> Listen
+                            </button>
+                        </div>
+                        <p class="text-sm text-slate-200">
+                            Use <strong class="text-sky-400">"THE"</strong> for <strong>unique objects</strong> (only one in existence) or specific items everyone knows.
+                        </p>
+                        <div class="bg-slate-900 p-3 rounded-xl border border-slate-700 text-xs ethiopic-font text-sky-300">
+                            <strong>በአማርኛ፡</strong> በዓለም ላይ አንድ ብቻ ለሆኑ ወይም ለታወቁ ነገሮች "THE" እንጠቀማለን።
+                            <br>ምሳሌ፡ The sun (ፀሐይ)፣ The moon (ጨረቃ)።
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="max-w-5xl mx-auto w-full text-center py-4 text-xs text-slate-400 border-t border-slate-800 mt-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+        <div class="flex items-center gap-2">
+            <span class="inline-block w-3 h-3 rounded-full bg-emerald-500"></span>
+            <span class="inline-block w-3 h-3 rounded-full bg-yellow-400"></span>
+            <span class="inline-block w-3 h-3 rounded-full bg-red-500"></span>
+            <span class="font-bold text-slate-300">Designed for Young Ethiopian Explorers</span>
+        </div>
+        <p class="text-slate-400">Powered by Golden British Voice Speech Synthesis & Amharic Support</p>
+    </footer>
+
+    <script>
+        /* ====================================================================
+           1. DATA STRUCTURES & DATASETS
+           ==================================================================== */
+        
+        // Quiz Questions Data (Includes explicit Unique Objects like Sun, Moon, Earth, Sky, Nile)
+        const quizQuestions = [
+            {
+                sentence: "Look up at ____ sun in the sky!",
+                correct: "THE",
+                graphic: "☀️",
+                amharicWord: "ፀሐይ (The Sun)",
+                englishRule: "We use 'THE' because the sun is a unique object. There is only one sun!",
+                amharicRule: "ፀሐይ በዓለም ላይ አንድ ብቻ ስለሆነች 'THE' እንጠቀማለን!"
+            },
+            {
+                sentence: "I saw ____ elephant walking in Awash National Park.",
+                correct: "AN",
+                graphic: "🐘",
+                amharicWord: "ዝሆን (Elephant)",
+                englishRule: "We use 'AN' because 'elephant' starts with a vowel sound (E).",
+                amharicRule: "'Elephant' የሚለው ቃል በአናባቢ ድምፅ (E) ስለሚጀምር 'AN' እንጠቀማለን!"
+            },
+            {
+                sentence: "____ moon shines bright during the Ethiopian night.",
+                correct: "THE",
+                graphic: "🌙",
+                amharicWord: "ጨረቃ (The Moon)",
+                englishRule: "We use 'THE' because the moon is unique!",
+                amharicRule: "ጨረቃ በሰማይ ላይ አንድ ብቻ ስለሆነች 'THE' እንጠቀማለን!"
+            },
+            {
+                sentence: "Abebe is drinking ____ cup of delicious Ethiopian coffee.",
+                correct: "A",
+                graphic: "☕",
+                amharicWord: "የቡና ስኒ (A Cup of Coffee)",
+                englishRule: "We use 'A' because 'cup' begins with a consonant sound (C).",
+                amharicRule: "'Cup' የሚለው ቃል በተናባቢ ድምፅ (C) ስለሚጀምር 'A' እንጠቀማለን!"
+            },
+            {
+                sentence: "____ Earth is our beautiful home planet.",
+                correct: "THE",
+                graphic: "🌍",
+                amharicWord: "ምድር (The Earth)",
+                englishRule: "We use 'THE' because the Earth is a unique planet!",
+                amharicRule: "ምድር አንድ ብቻ የታወቀች ፕላኔት ስለሆነች 'THE' እንጠቀማለን!"
+            },
+            {
+                sentence: "Tigist bought ____ sweet red apple from the market.",
+                correct: "AN",
+                graphic: "🍎",
+                amharicWord: "ፖም (An Apple)",
+                englishRule: "We use 'AN' because 'apple' starts with the vowel sound (A).",
+                amharicRule: "'Apple' በአናባቢ ድምፅ (A) ስለሚጀምር 'AN' እንጠቀማለን!"
+            },
+            {
+                sentence: "____ Nile River flows all the way through East Africa.",
+                correct: "THE",
+                graphic: "🌊",
+                amharicWord: "ዓባይ ወንዝ (The Nile River)",
+                englishRule: "We use 'THE' for unique rivers like the famous Nile River!",
+                amharicRule: "እንደ ዓባይ ወንዝ ላሉ ታዋቂና ልዩ ወንዞች 'THE' እንጠቀማለን!"
+            },
+            {
+                sentence: "Look! There is ____ lion resting near the tree.",
+                correct: "A",
+                graphic: "🦁",
+                amharicWord: "አንበሳ (A Lion)",
+                englishRule: "We use 'A' because 'lion' starts with the consonant sound (L).",
+                amharicRule: "'Lion' በተናባቢ ድምፅ (L) ስለሚጀምር 'A' እንጠቀማለን!"
+            },
+            {
+                sentence: "Take ____ umbrella because it is raining heavily in Addis Ababa.",
+                correct: "AN",
+                graphic: "☂️",
+                amharicWord: "ጃንጥላ (An Umbrella)",
+                englishRule: "We use 'AN' because 'umbrella' begins with a vowel sound (U).",
+                amharicRule: "'Umbrella' በአናባቢ ድምፅ (U) ስለሚጀምር 'AN' እንጠቀማለን!"
+            },
+            {
+                sentence: "____ sky is blue and clear today.",
+                correct: "THE",
+                graphic: "☁️",
+                amharicWord: "ሰማይ (The Sky)",
+                englishRule: "We use 'THE' because the sky is unique to our world!",
+                amharicRule: "ሰማይ አንድ ብቻ ስለሆነ 'THE' እንጠቀማለን!"
+            }
+        ];
+
+        // Unique Objects Spotlight Gallery Items
+        const uniqueObjectsList = [
+            { title: "The Sun", amharic: "ፀሐይ", graphic: "☀️", note: "Only one sun lights our day." },
+            { title: "The Moon", amharic: "ጨረቃ", graphic: "🌙", note: "Only one moon shines at night." },
+            { title: "The Earth", amharic: "ምድር", graphic: "🌍", note: "Our unique planet home." },
+            { title: "The Sky", amharic: "ሰማይ", graphic: "🌌", note: "The vast sky above us." },
+            { title: "The Nile River", amharic: "ዓባይ ወንዝ", graphic: "🏞️", note: "Famous unique river in Africa." },
+            { title: "The Red Sea", amharic: "ቀይ ባሕር", graphic: "🌊", note: "Unique body of water." }
+        ];
+
+        // Basket Sorting Pool
+        const sortingItemsPool = [
+            { word: "Sun", amharic: "ፀሐይ", correct: "THE", graphic: "☀️" },
+            { word: "Banana", amharic: "ሙዝ", correct: "A", graphic: "🍌" },
+            { word: "Orange", amharic: "ብርቱካን", correct: "AN", graphic: "🍊" },
+            { word: "Moon", amharic: "ጨረቃ", correct: "THE", graphic: "🌙" },
+            { word: "Zebra", amharic: "ሜዳ አህያ", correct: "A", graphic: "🦓" },
+            { word: "Eagle", amharic: "ንስር", correct: "AN", graphic: "🦅" },
+            { word: "Earth", amharic: "ምድር", correct: "THE", graphic: "🌍" },
+            { word: "Car", amharic: "መኪና", correct: "A", graphic: "🚗" },
+            { word: "Igloo", amharic: "የበረዶ ቤት", correct: "AN", graphic: "🧊" },
+            { title: "Nile River", word: "Nile River", amharic: "ዓባይ ወንዝ", correct: "THE", graphic: "🌊" }
+        ];
+
+        /* ====================================================================
+           2. GLOBAL GAME STATE
+           ==================================================================== */
+        let userScore = 0;
+        let currentQuizIndex = 0;
+        let isAmharicVisible = true;
+        let reviewTimerInterval = null;
+        let remainingPauseSeconds = 0;
+        let isTimerPaused = false;
+        let currentSortItemIndex = 0;
+
+        /* ====================================================================
+           3. BRITISH GOLDEN VOICE SPEECH SYNTHESIS
+           ==================================================================== */
+        let britishVoice = null;
+
+        function initGoldenVoice() {
+            if ('speechSynthesis' in window) {
+                const loadVoices = () => {
+                    const voices = window.speechSynthesis.getVoices();
+                    // Search specifically for British Male or en-GB voices
+                    britishVoice = voices.find(v => v.lang === 'en-GB' && (v.name.includes('Male') || v.name.includes('George') || v.name.includes('Oliver') || v.name.includes('Arthur'))) ||
+                                 voices.find(v => v.lang === 'en-GB') ||
+                                 voices.find(v => v.lang.startsWith('en'));
+
+                    const statusEl = document.getElementById('voiceStatusText');
+                    if (britishVoice) {
+                        statusEl.innerText = BritishVoiceNameShort(britishVoice.name);
+                    } else {
+                        statusEl.innerText = "English Voice Active";
+                    }
+                };
+
+                loadVoices();
+                if (speechSynthesis.onvoiceschanged !== undefined) {
+                    speechSynthesis.onvoiceschanged = loadVoices;
+                }
+            } else {
+                document.getElementById('voiceStatusText').innerText = "Audio Not Supported";
+            }
+        }
+
+        function BritishVoiceNameShort(name) {
+            if (name.length > 18) return name.substring(0, 15) + '...';
+            return name;
+        }
+
+        // Golden voice audio announcer function with callback when speech finishes
+        function speakGoldenVoice(text, onCompleteCallback) {
+            if (!('speechSynthesis' in window)) {
+                if (onCompleteCallback) onCompleteCallback();
+                return;
+            }
+
+            // Cancel any ongoing speech
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            if (britishVoice) {
+                utterance.voice = britishVoice;
+            }
+            
+            utterance.lang = 'en-GB';
+            utterance.pitch = 0.9;  // Slightly deeper golden voice tone
+            utterance.rate = 0.88;  // Clear, friendly pace for kids
+
+            utterance.onend = () => {
+                if (onCompleteCallback) onCompleteCallback();
+            };
+
+            utterance.onerror = () => {
+                if (onCompleteCallback) onCompleteCallback();
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function testGoldenVoice() {
+            speakGoldenVoice("Hello young explorer! I am your narrator. Let us learn when to use A, AN, and THE together!");
+        }
+
+        /* ====================================================================
+           4. SENTENCE QUIZ ADVENTURE LOGIC
+           ==================================================================== */
+        function loadQuizQuestion() {
+            clearInterval(reviewTimerInterval);
+            isTimerPaused = false;
+            document.getElementById('pauseBtnText').innerText = "Pause Timer";
+            
+            const q = quizQuestions[currentQuizIndex];
+            
+            // UI elements
+            document.getElementById('quizQuestionCounter').innerText = `Question ${currentQuizIndex + 1} of ${quizQuestions.length}`;
+            document.getElementById('quizGraphic').innerText = q.graphic;
+            document.getElementById('quizAmharicWord').innerText = q.amharicWord;
+            
+            // Format sentence with underlined blank space
+            const sentenceHTML = q.sentence.replace('____', `<span class="underline decoration-yellow-400 decoration-4 underline-offset-8 px-2 text-yellow-300 font-black">____</span>`);
+            document.getElementById('quizSentence').innerHTML = sentenceHTML;
+
+            // Reset Card Borders & Feedback Box
+            const card = document.getElementById('quizCard');
+            card.className = "bg-slate-900/90 rounded-3xl p-6 sm:p-8 border-2 border-slate-700 shadow-2xl text-center relative overflow-hidden transition-all duration-300";
+
+            const feedbackBox = document.getElementById('feedbackBox');
+            feedbackBox.classList.add('hidden');
+
+            // Reset Choice Buttons
+            const choicesContainer = document.getElementById('quizOptionsContainer');
+            choicesContainer.classList.remove('pointer-events-none');
+
+            ['A', 'AN', 'THE'].forEach(opt => {
+                const btn = document.getElementById(`btn-choice-${opt}`);
+                btn.className = "choice-btn py-4 px-3 sm:px-6 rounded-2xl text-2xl sm:text-3xl font-black bg-slate-800 hover:bg-emerald-600 text-white border-2 border-slate-700 hover:border-emerald-400 shadow-xl transition flex flex-col items-center justify-center gap-1 group opacity-100";
+            });
+
+            // Read the question aloud with narrator
+            const spokenQuestion = q.sentence.replace('____', 'blank');
+            speakGoldenVoice(`Question ${currentQuizIndex + 1}. ${spokenQuestion}`);
+        }
+
+        function checkQuizAnswer(selectedOption) {
+            const q = quizQuestions[currentQuizIndex];
+            const isCorrect = (selectedOption === q.correct);
+            const card = document.getElementById('quizCard');
+            const feedbackBox = document.getElementById('feedbackBox');
+            const choicesContainer = document.getElementById('quizOptionsContainer');
+
+            // Prevent double-clicks
+            choicesContainer.classList.add('pointer-events-none');
+
+            // Highlight Correct vs Wrong Buttons
+            ['A', 'AN', 'THE'].forEach(opt => {
+                const btn = document.getElementById(`btn-choice-${opt}`);
+                if (opt === q.correct) {
+                    // Correct choice gets vibrant green highlight
+                    btn.className = "choice-btn py-4 px-3 sm:px-6 rounded-2xl text-2xl sm:text-3xl font-black bg-emerald-500 text-white border-4 border-emerald-300 shadow-2xl scale-105 transition flex flex-col items-center justify-center gap-1";
+                } else if (opt === selectedOption && !isCorrect) {
+                    // Wrong choice gets red highlight with shake effect
+                    btn.className = "choice-btn py-4 px-3 sm:px-6 rounded-2xl text-2xl sm:text-3xl font-black bg-red-600 text-white border-4 border-red-300 shadow-2xl animate-shake flex flex-col items-center justify-center gap-1";
+                } else {
+                    btn.classList.add('opacity-40');
+                }
+            });
+
+            // Update Score & Card Glow
+            if (isCorrect) {
+                card.classList.add('correct-glow');
+                userScore += 10;
+                document.getElementById('scoreDisplay').innerText = userScore;
+                
+                document.getElementById('feedbackIcon').innerText = "🌟";
+                document.getElementById('feedbackTitle').innerText = "Splendid! You got it right!";
+                document.getElementById('feedbackTitle').className = "text-xl font-extrabold text-emerald-400";
+                feedbackBox.className = "rounded-2xl p-5 text-left border-2 transition-all space-y-4 my-4 bg-emerald-950/80 border-emerald-500/50";
+            } else {
+                card.classList.add('wrong-glow');
+                document.getElementById('feedbackIcon').innerText = "❌";
+                document.getElementById('feedbackTitle').innerText = `Not quite! The right answer is "${q.correct}".`;
+                document.getElementById('feedbackTitle').className = "text-xl font-extrabold text-red-400";
+                feedbackBox.className = "rounded-2xl p-5 text-left border-2 transition-all space-y-4 my-4 bg-red-950/80 border-red-500/50";
+            }
+
+            // Update Completed Sentence in Question Display
+            const fullSentenceStr = q.sentence.replace('____', `<strong class="text-yellow-300 underline font-black">${q.correct}</strong>`);
+            document.getElementById('quizSentence').innerHTML = fullSentenceStr;
+
+            // Fill English and Amharic Explanations
+            document.getElementById('feedbackEnglishRule').innerText = q.englishRule;
+            document.getElementById('feedbackAmharicRule').innerText = q.amharicRule;
+            document.getElementById('feedbackAmharicRule').style.display = isAmharicVisible ? 'block' : 'none';
+
+            // Reveal feedback box
+            feedbackBox.classList.remove('hidden');
+
+            // Indicate Narrator is speaking
+            const timerIcon = document.getElementById('timerIcon');
+            const timerStatus = document.getElementById('timerStatus');
+            if (timerIcon) timerIcon.className = "fa-solid fa-volume-high text-amber-400 animate-pulse text-base";
+            if (timerStatus) timerStatus.innerText = "Narrator Explaining...";
+
+            // Golden Narrator Voice Explanation Text
+            const fullSentenceSpoken = q.sentence.replace('____', q.correct);
+            const narrationText = isCorrect ? 
+                `Brilliant! ${fullSentenceSpoken}. ${q.englishRule}` : 
+                `The correct article is ${q.correct}. ${fullSentenceSpoken}. ${q.englishRule}`;
+
+            let timerStarted = false;
+            const startTimerAfterNarration = () => {
+                if (timerStarted) return;
+                timerStarted = true;
+                // Give 6 full seconds of pause ONLY AFTER narrator completes speaking
+                startReviewTimer(6);
+            };
+
+            // Speak and start timer upon completion
+            speakGoldenVoice(narrationText, startTimerAfterNarration);
+
+            // Fallback safety timeout if speech API event fails
+            setTimeout(startTimerAfterNarration, 10000);
+        }
+
+        // Countdown timer for question review
+        function startReviewTimer(seconds = 6) {
+            clearInterval(reviewTimerInterval);
+            remainingPauseSeconds = seconds;
+
+            const timerIcon = document.getElementById('timerIcon');
+            const timerStatus = document.getElementById('timerStatus');
+            if (timerIcon) timerIcon.className = "fa-regular fa-clock text-yellow-300 animate-spin text-base";
+            if (timerStatus) timerStatus.innerHTML = `Next in <strong class="text-sm text-yellow-300 px-1">${remainingPauseSeconds}</strong>s`;
+
+            reviewTimerInterval = setInterval(() => {
+                if (!isTimerPaused) {
+                    remainingPauseSeconds--;
+                    if (timerStatus) timerStatus.innerHTML = `Next in <strong class="text-sm text-yellow-300 px-1">${remainingPauseSeconds}</strong>s`;
+
+                    if (remainingPauseSeconds <= 0) {
+                        clearInterval(reviewTimerInterval);
+                        nextQuizQuestion();
+                    }
+                }
+            }, 1000);
+        }
+
+        function togglePauseTimer() {
+            isTimerPaused = !isTimerPaused;
+            const btnText = document.getElementById('pauseBtnText');
+            const timerStatus = document.getElementById('timerStatus');
+
+            if (isTimerPaused) {
+                btnText.innerText = "Resume Timer";
+                timerStatus.innerHTML = `<span class="text-sky-300">Paused (${remainingPauseSeconds}s left)</span>`;
+            } else {
+                btnText.innerText = "Pause Timer";
+            }
+        }
+
+        function replayFeedbackVoice() {
+            clearInterval(reviewTimerInterval);
+            const timerIcon = document.getElementById('timerIcon');
+            const timerStatus = document.getElementById('timerStatus');
+            if (timerIcon) timerIcon.className = "fa-solid fa-volume-high text-amber-400 animate-pulse text-base";
+            if (timerStatus) timerStatus.innerText = "Narrator Replaying...";
+
+            const q = quizQuestions[currentQuizIndex];
+            const fullSentenceSpoken = q.sentence.replace('____', q.correct);
+            
+            let timerStarted = false;
+            speakGoldenVoice(`${fullSentenceSpoken}. ${q.englishRule}`, () => {
+                if (timerStarted) return;
+                timerStarted = true;
+                startReviewTimer(6);
+            });
+        }
+
+        function nextQuizQuestion() {
+            clearInterval(reviewTimerInterval);
+            if (currentQuizIndex < quizQuestions.length - 1) {
+                currentQuizIndex++;
+                loadQuizQuestion();
+            } else {
+                // Game Completed Celebration
+                currentQuizIndex = 0;
+                speakGoldenVoice(`Hooray! Fantastic work young explorer! You completed all questions and earned ${userScore} stars!`);
+                alert(`🎉 Congratulations! You completed all questions with ${userScore} stars!`);
+                loadQuizQuestion();
+            }
+        }
+
+        /* ====================================================================
+           5. BASKET SORTING GAME LOGIC
+           ==================================================================== */
+        function loadSortingItem() {
+            const item = sortingItemsPool[currentSortItemIndex];
+            document.getElementById('sortItemEmoji').innerText = item.graphic;
+            document.getElementById('sortItemWord').innerText = item.word;
+            document.getElementById('sortItemAmharic').innerText = item.amharic;
+
+            const feedback = document.getElementById('sortFeedback');
+            feedback.classList.add('hidden');
+
+            speakGoldenVoice(`Which basket for ${item.word}? A, AN, or THE?`);
+        }
+
+        function submitSortChoice(basketChosen) {
+            const item = sortingItemsPool[currentSortItemIndex];
+            const feedback = document.getElementById('sortFeedback');
+            feedback.classList.remove('hidden');
+
+            let voiceText = "";
+
+            if (basketChosen === item.correct) {
+                userScore += 5;
+                document.getElementById('scoreDisplay').innerText = userScore;
+                
+                feedback.className = "max-w-md mx-auto my-3 p-4 rounded-2xl text-center font-bold text-base bg-emerald-900/80 text-emerald-200 border-2 border-emerald-400 animate-bounce-subtle";
+                feedback.innerHTML = `🌟 Excellent! We say <strong>"${item.correct} ${item.word}"</strong>!`;
+                voiceText = `Correct! We say ${item.correct} ${item.word}.`;
+            } else {
+                feedback.className = "max-w-md mx-auto my-3 p-4 rounded-2xl text-center font-bold text-base bg-red-900/80 text-red-200 border-2 border-red-400 animate-shake";
+                feedback.innerHTML = `❌ Try again! The correct basket for "${item.word}" is <strong>"${item.correct}"</strong>!`;
+                voiceText = `Not quite. The correct article for ${item.word} is ${item.correct}. We say ${item.correct} ${item.word}.`;
+            }
+
+            // Ample narration time buffer before auto advancing
+            let advanced = false;
+            const advanceNext = () => {
+                if (advanced) return;
+                advanced = true;
+                setTimeout(() => {
+                    currentSortItemIndex = (currentSortItemIndex + 1) % sortingItemsPool.length;
+                    loadSortingItem();
+                }, 2500); // 2.5s comfortable delay after speech completes
+            };
+
+            speakGoldenVoice(voiceText, advanceNext);
+            setTimeout(advanceNext, 8000); // Safety fallback
+        }
+
+        /* ====================================================================
+           6. UNIQUE OBJECTS GALLERY RENDER
+           ==================================================================== */
+        function renderUniqueObjects() {
+            const container = document.getElementById('uniqueObjectsGrid');
+            container.innerHTML = '';
+
+            uniqueObjectsList.forEach(obj => {
+                const card = document.createElement('div');
+                card.className = "bg-slate-800/90 border-2 border-amber-500/40 rounded-2xl p-5 flex flex-col items-center text-center shadow-xl hover:border-amber-400 transition group transform hover:-translate-y-1";
+                card.innerHTML = `
+                    <div class="text-6xl mb-2 group-hover:scale-110 transition duration-300">${obj.graphic}</div>
+                    <div class="text-xs bg-yellow-400 text-slate-900 font-black px-3 py-0.5 rounded-full uppercase tracking-wider mb-2">Article: THE</div>
+                    <h3 class="text-2xl font-black text-white">${obj.title}</h3>
+                    <div class="text-emerald-300 font-bold ethiopic-font text-base mt-1">${obj.amharic}</div>
+                    <p class="text-xs text-slate-300 mt-2 border-t border-slate-700/60 pt-2 w-full">${obj.note}</p>
+                    <button onclick="speakGoldenVoice('Always say: ${obj.title}. ${obj.note}')" class="mt-3 bg-amber-500/20 hover:bg-amber-500/40 border border-amber-400/50 text-amber-200 text-xs font-bold px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition">
+                        <i class="fa-solid fa-volume-high"></i> Listen Pronunciation
+                    </button>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        /* ====================================================================
+           7. AMHARIC TOGGLE & NAVIGATION TABS
+           ==================================================================== */
+        function toggleAmharic() {
+            isAmharicVisible = !isAmharicVisible;
+            const label = document.getElementById('amharicToggleLabel');
+            const amharicRuleBox = document.getElementById('feedbackAmharicRule');
+
+            if (isAmharicVisible) {
+                label.innerText = "አማርኛ: በርቷል";
+                if (amharicRuleBox) amharicRuleBox.style.display = 'block';
+            } else {
+                label.innerText = "አማርኛ: ተዘግቷል";
+                if (amharicRuleBox) amharicRuleBox.style.display = 'none';
+            }
+        }
+
+        function switchTab(tabName) {
+            // Hide all sections
+            document.querySelectorAll('.game-section').forEach(sec => sec.classList.add('hidden'));
+
+            // Reset tab button styling
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.className = "tab-btn px-4 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 transition";
+            });
+
+            // Activate chosen section & tab button
+            document.getElementById(`sec-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            activeBtn.className = "tab-btn px-4 py-2.5 rounded-xl font-bold text-sm flex items-center gap-2 bg-emerald-600 text-white shadow-lg transition";
+
+            // Tab specific initializers
+            if (tabName === 'quiz') {
+                loadQuizQuestion();
+            } else if (tabName === 'sorting') {
+                loadSortingItem();
+            } else if (tabName === 'unique') {
+                renderUniqueObjects();
+                speakGoldenVoice("Unique Objects Spotlight! Learn why we always use THE for the sun, the moon, and the Earth!");
+            } else if (tabName === 'rules') {
+                speakGoldenVoice("Article Rules Guide! A for consonant sounds, AN for vowel sounds, and THE for unique objects!");
+            }
+        }
+
+        /* ====================================================================
+           8. INITIALIZATION
+           ==================================================================== */
+        window.onload = function() {
+            initGoldenVoice();
+            renderUniqueObjects();
+            loadQuizQuestion();
+        };
+    </script>
+</body>
+</html>
